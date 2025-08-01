@@ -1,0 +1,146 @@
+/* --- Shared Styles --- */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.5s ease-out forwards;
+}
+
+/* --- QuizGenerator Styles --- */
+.question-card {
+  border: 1px solid #e2e8f0;
+  border-radius: 0.5rem;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  background-color: #f9fafb;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+}
+
+.option-label {
+  cursor: pointer;
+  padding: 0.5rem 0;
+  display: flex;
+  align-items: center;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.option-label:hover {
+  background-color: #f0f4f8;
+  border-radius: 0.25rem;
+}
+
+.option-label input[type="radio"] {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  border: 2px solid #cbd5e0;
+  border-radius: 50%;
+  width: 1.25rem;
+  height: 1.25rem;
+  margin-right: 0.5rem;
+  position: relative;
+  flex-shrink: 0;
+}
+
+.option-label input[type="radio"]:checked {
+  background-color: #4f46e5;
+  border-color: #4f46e5;
+}
+
+.option-label input[type="radio"]:checked::before {
+  content: '';
+  display: block;
+  width: 0.625rem;
+  height: 0.625rem;
+  background-color: white;
+  border-radius: 50%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.option-label input[type="radio"]:disabled {
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+.submit-quiz-button {
+  transition: background-color 0.2s ease-in-out, transform 0.1s ease-in-out;
+}
+
+.submit-quiz-button:hover {
+  transform: translateY(-2px);
+}
+
+.submit-quiz-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.final-score {
+  background-color: #e0f2fe;
+  color: #1e40af;
+  border: 1px solid #bfdbfe;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* --- FormulaGenerator & RecommendationPage Styles --- */
+.formula-main-card,
+.recommendation-main-card {
+  max-width: 900px;
+}
+
+.formula-card {
+  animation: fadeIn 0.5s ease-out;
+}
+
+/* --- Responsive Adjustments --- */
+@media (max-width: 768px) {
+  .formula-main-card,
+  .recommendation-main-card {
+    padding: 1.5rem;
+  }
+  .text-3xl {
+    font-size: 2rem;
+  }
+  .text-xl {
+    font-size: 1.125rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .formula-main-card,
+  .recommendation-main-card {
+    padding: 1rem;
+  }
+  .text-3xl {
+    font-size: 1.5rem;
+  }
+  .text-xl {
+    font-size: 1rem;
+  }
+  .formula-card {
+    padding: 1rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .quiz-container {
+    padding: 1rem;
+  }
+  .question-card {
+    padding: 1rem;
+  }
+  .text-3xl {
+    font-size: 1.75rem;
+  }
+}

@@ -3,8 +3,12 @@ import dotenv from "dotenv";
 import { connectDb } from "./database/db.js";
 import Razorpay from "razorpay";
 import cors from "cors";
+import fetch from "node-fetch"; // For making API calls to Gemini
+import mongoose from "mongoose"; // ADDED: For QuizResult model interaction
+import { QuizResult } from "./models/QuizResult.js"; // ADDED: Import QuizResult model
+import { User } from "./models/User.js"; // ADDED: Import User model for potential future use or validation
 
-dotenv.config();
+dotenv.config(); // Ensure environment variables are loaded first
 
 export const instance = new Razorpay({
   key_id: process.env.Razorpay_Key,
@@ -34,6 +38,252 @@ import adminRoutes from "./routes/admin.js";
 app.use("/api", userRoutes);
 app.use("/api", courseRoutes);
 app.use("/api", adminRoutes);
+
+// --- AUTOMATED QUIZ GENERATION ENDPOINT (Existing) ---
+app.post("/api/generate-quiz", async (req, res) => {
+  const { topic, difficulty, num_questions = 10 } = req.body;
+
+  if (!topic) {
+    return res.status(400).json({ success: false, message: "Quiz topic is required." });
+  }
+
+  let difficulty_prompt_text = '';
+  switch (difficulty) {
+    case '9th_10th_Olympiad':
+      difficulty_prompt_text = '9th and 10th grade Olympiad level';
+      break;
+    case '11th_12th_JEE':
+      difficulty_prompt_text = '11th and 12th grade JEE Mains/Advanced level';
+      break;
+    default:
+      difficulty_prompt_text = 'medium school level';
+  }
+
+  const prompt = `Generate a ${num_questions}-question multiple-choice quiz on the topic of "${topic}".
+  The questions should be suitable for a ${difficulty_prompt_text} mathematics student.
+  Each question should have 4 options (A, B, C, D) and clearly indicate the correct answer.
+  Format the output as a JSON array of objects, where each object represents a question.
+  Each question object should have the following properties:
+  - "question": The quiz question text.
+  - "options": An array of strings for the answer options (e.g., ["A) 3", "B) 4", "C) 5", "D) 6"]).
+  - "correct_answer": The letter of the correct option (e.g., "A", "B", "C", "D").
+
+  Example JSON format for one question:
+  {
+    "question": "What is 2 + 2?",
+    "options": ["A) 3", "B) 4", "C) 5", "D) 6"],
+    "correct_answer": "B"
+  }
+  `;
+
+  const chatHistory = [];
+  chatHistory.push({ role: "user", parts: [{ text: prompt }] });
+  const payload = { contents: chatHistory };
+
+  const apiKey = process.env.GEMINI_API_KEY || ""; 
+  const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+
+  try {
+    const response = await fetch(apiUrl, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      console.error("Gemini API Error Response:", errorData);
+      return res.status(response.status).json({
+        success: false,
+        message: "Failed to generate quiz from AI model.",
+        details: errorData,
+      });
+    }
+
+    const result = await response.json();
+
+    if (result.candidates && result.candidates.length > 0 &&
+        result.candidates[0].content && result.candidates[0].content.parts &&
+        result.candidates[0].content.parts.length > 0) {
+      const quizJsonString = result.candidates[0].content.parts[0].text;
+      try {
+        const cleanedJsonString = quizJsonString.replace(/```json\n|```/g, '').trim();
+        const quiz = JSON.parse(cleanedJsonString);
+        res.status(200).json({ success: true, quiz });
+      } catch (parseError) {
+        console.error("Failed to parse AI response as JSON:", parseError);
+        console.error("Raw AI response:", quizJsonString);
+        res.status(500).json({ success: false, message: "AI model returned unparseable JSON.", rawResponse: quizJsonString });
+      }
+    } else {
+      console.error("Unexpected Gemini API response structure:", result);
+      res.status(500).json({ success: false, message: "AI model returned an unexpected response." });
+    }
+  } catch (error) {
+    console.error("Error calling Gemini API for quiz generation:", error);
+    res.status(500).json({ success: false, message: "Internal server error during AI quiz generation.", error: error.message });
+  }
+});
+
+// --- MATH FORMULA GENERATION ENDPOINT (Existing) ---
+app.post("/api/generate-formulas", async (req, res) => {
+  const { chapter, class_level, competitive_level } = req.body;
+
+  if (!chapter || !class_level || !competitive_level) {
+    return res.status(400).json({ success: false, message: "Chapter, Class Level, and Competitive Level are required." });
+  }
+
+  let competitive_context_text = '';
+  switch (competitive_level) {
+    case 'Olympiad':
+      competitive_context_text = 'Olympiad level';
+      break;
+    case 'JEE':
+      competitive_context_text = 'JEE Mains and Advanced level';
+      break;
+    default:
+      competitive_context_text = 'standard school level';
+  }
+
+  const prompt = `Generate a comprehensive list of mathematical formulas for the "${chapter}" chapter, suitable for a "${class_level}" student preparing for "${competitive_context_text}" examinations.
+  For each formula, provide the formula itself and a very brief description of what it represents or is used for.
+  Organize the formulas logically (e.g., by sub-topic if applicable).
+  Format the output as a JSON object with a single key "formulas" which is an array of objects.
+  Each formula object should have "name" (e.g., "Quadratic Formula"), "formula" (the actual formula, ideally in LaTeX format if possible, otherwise plain text), and "description".
+
+  Example JSON format for one formula:
+  {
+    "formulas": [
+      {
+        "name": "Pythagorean Theorem",
+        "formula": "a^2 + b^2 = c^2",
+        "description": "Relates the sides of a right-angled triangle."
+      }
+    ]
+  }
+  `;
+
+  const chatHistory = [];
+  chatHistory.push({ role: "user", parts: [{ text: prompt }] });
+  const payload = { contents: chatHistory };
+
+  const apiKey = process.env.GEMINI_API_KEY || ""; 
+  const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+
+  try {
+    const response = await fetch(apiUrl, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      console.error("Gemini API Error Response for Formula Generation:", errorData);
+      return res.status(response.status).json({
+        success: false,
+        message: "Failed to generate formulas from AI model.",
+        details: errorData,
+      });
+    }
+
+    const result = await response.json();
+
+    if (result.candidates && result.candidates.length > 0 &&
+        result.candidates[0].content && result.candidates[0].content.parts &&
+        result.candidates[0].content.parts.length > 0) {
+      const formulasJsonString = result.candidates[0].content.parts[0].text;
+      try {
+        const cleanedJsonString = formulasJsonString.replace(/```json\n|```/g, '').trim();
+        const formulas = JSON.parse(cleanedJsonString);
+        res.status(200).json({ success: true, formulas: formulas.formulas }); // Assuming AI returns { "formulas": [...] }
+      } catch (parseError) {
+        console.error("Failed to parse AI response as JSON for formulas:", parseError);
+        console.error("Raw AI response for formulas:", formulasJsonString);
+        res.status(500).json({ success: false, message: "AI model returned unparseable JSON for formulas.", rawResponse: formulasJsonString });
+      }
+    } else {
+      console.error("Unexpected Gemini API response structure for formulas:", result);
+      res.status(500).json({ success: false, message: "AI model returned an unexpected response for formulas." });
+    }
+  } catch (error) {
+    console.error("Error calling Gemini API for formula generation:", error);
+    res.status(500).json({ success: false, message: "Internal server error during AI formula generation.", error: error.message });
+  }
+});
+
+// --- NEW: ENDPOINT TO SUBMIT QUIZ RESULTS ---
+app.post("/api/submit-quiz-result", async (req, res) => {
+  // This endpoint would typically require authentication to identify the user
+  // For now, we'll assume a userId is passed or retrieved from a session/token
+  const { userId, topic, difficulty, score, totalQuestions } = req.body;
+
+  if (!userId || !topic || !difficulty || score === undefined || totalQuestions === undefined) {
+    return res.status(400).json({ success: false, message: "Missing required quiz result data." });
+  }
+
+  try {
+    // Basic validation: Ensure user exists (optional, but good practice)
+    const userExists = await User.findById(userId); // Assuming User model is imported
+    if (!userExists) {
+      return res.status(404).json({ success: false, message: "User not found." });
+    }
+
+    const newQuizResult = new QuizResult({
+      user: userId,
+      topic,
+      difficulty,
+      score,
+      totalQuestions,
+    });
+
+    await newQuizResult.save();
+    res.status(201).json({ success: true, message: "Quiz result saved successfully!", result: newQuizResult });
+  } catch (error) {
+    console.error("Error saving quiz result:", error);
+    res.status(500).json({ success: false, message: "Internal server error while saving quiz result.", error: error.message });
+  }
+});
+
+// --- NEW: BASIC RECOMMENDATION ENDPOINT ---
+app.get("/api/get-recommendations/:userId", async (req, res) => {
+  const { userId } = req.params;
+
+  try {
+    // Find recent quiz results for the user
+    const recentResults = await QuizResult.find({ user: userId })
+      .sort({ createdAt: -1 }) // Sort by most recent
+      .limit(5); // Get last 5 quiz results
+
+    let recommendation = "Keep up the great work! Explore our latest courses.";
+
+    if (recentResults.length > 0) {
+      // Simple logic: If last quiz score was low, recommend review. If high, recommend next level.
+      const lastQuiz = recentResults[0];
+      const percentage = (lastQuiz.score / lastQuiz.totalQuestions) * 100;
+
+      if (percentage < 60) {
+        recommendation = `You scored ${lastQuiz.score}/${lastQuiz.totalQuestions} on ${lastQuiz.topic} (${lastQuiz.difficulty}). Consider reviewing "${lastQuiz.topic}" or related foundational concepts.`;
+      } else if (percentage >= 80) {
+        recommendation = `Excellent work on ${lastQuiz.topic} (${lastQuiz.difficulty})! You scored ${lastQuiz.score}/${lastQuiz.totalQuestions}. You might be ready for more advanced topics in "${lastQuiz.topic}" or a higher difficulty level.`;
+      } else {
+        recommendation = `Good progress on ${lastQuiz.topic} (${lastQuiz.difficulty}). Keep practicing!`;
+      }
+
+      // More advanced AI recommendation (using Gemini) could be integrated here
+      // based on pattern of scores across topics/difficulties.
+      // For example:
+      // const prompt = `Based on these quiz results: ${JSON.stringify(recentResults)}, recommend a specific math topic or learning resource for the student to focus on next.`;
+      // Call Gemini API similar to quiz/formula generation
+    }
+
+    res.status(200).json({ success: true, recommendation });
+  } catch (error) {
+    console.error("Error getting recommendations:", error);
+    res.status(500).json({ success: false, message: "Internal server error while fetching recommendations.", error: error.message });
+  }
+});
+
 
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);

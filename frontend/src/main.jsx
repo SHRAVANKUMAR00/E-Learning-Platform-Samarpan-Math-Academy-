@@ -3,6 +3,7 @@ import ReactDOM from "react-dom/client";
 import App from "./App.jsx";
 import { UserContextProvider } from "./context/UserContext.jsx";
 import { CourseContextProvider } from "./context/CourseContext.jsx";
+import 'katex/dist/katex.min.css'; // ADDED: Global import for KaTeX CSS
 
 export const server = "http://localhost:5000";
 

@@ -22,6 +22,7 @@ import AdminCourses from "./admin/Courses/AdminCourses";
 import AdminUsers from "./admin/Users/AdminUsers";
 import ForgotPassword from "./pages/auth/ForgotPassword";
 import ResetPassword from "./pages/auth/ResetPassword";
+import AITools from "./pages/aitools/AITools"; // ADDED: New consolidated AI page
 
 const App = () => {
   const { isAuth, user, loading } = UserData();
@@ -36,6 +37,13 @@ const App = () => {
             <Route path="/" element={<Home />} />
             <Route path="/about" element={<About />} />
             <Route path="/courses" element={<Courses />} />
+            
+            {/* ADDED: New route for the consolidated AI Tools page */}
+            <Route
+              path="/ai-tools"
+              element={isAuth ? <AITools /> : <Login />}
+            />
+
             <Route
               path="/account"
               element={isAuth ? <Account user={user} /> : <Login />}
