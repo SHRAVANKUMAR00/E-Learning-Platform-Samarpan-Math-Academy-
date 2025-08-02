@@ -7,17 +7,18 @@ import {
   FaTelegramPlane,
   FaBookOpen,
   FaMapMarkerAlt,
-  FaPhone, // Import FaPhone icon
+  FaPhone,
 } from "react-icons/fa";
 
 const Footer = () => {
-  // Replace with your actual social media links
+  // Updated with extracted links from the image
   const socialLinks = {
-    facebook: "https://facebook.com",
-    instagram: "https://instagram.com",
-    telegram: "https://t.me/yourtelegramchannel", // Replace with your Telegram channel link
-    whatsapp: "https://wa.me/91XXXXXXXXXX", // Replace XXXXXXXXXX with your WhatsApp number
-    phone: "+916201212522", // Added phone number
+    facebook: "https://www.facebook.com/share/1DwhFgiFtW", // Extracted from image
+    instagram: "https://instagram.com/m.k.yadav2000", // Extracted from image
+    telegram: "https://t.me/Samarpanacademy", // Extracted from image
+    whatsapp: "https://chat.whatsapp.com/Luru6pYkIqY0DU2Y2L3mode", // Extracted from image
+    phone: "+916201212522", // Existing phone number
+    email: "msamarpan44@gmail.com", // Extracted from image
   };
 
   return (
@@ -60,8 +61,9 @@ const Footer = () => {
           {/* Column 4: Contact & Social */}
           <div>
             <h3 className="text-lg font-semibold mb-4 tracking-wider">Get in Touch</h3>
-             <a href="mailto:contact@samarpanacademy.com" className="text-gray-400 hover:text-white transition-colors mb-4 block">contact@samarpanacademy.com</a>
-             {/* NEW: Phone number */}
+             {/* Updated email link */}
+             <a href={`mailto:${socialLinks.email}`} className="text-gray-400 hover:text-white transition-colors mb-4 block">{socialLinks.email}</a>
+             {/* Phone number */}
              <a href={`tel:${socialLinks.phone}`} className="text-gray-400 hover:text-white transition-colors mb-4 flex items-center">
                 <FaPhone className="mr-2 flex-shrink-0" />
                 <span>{socialLinks.phone}</span>
@@ -74,11 +76,9 @@ const Footer = () => {
               <a href={socialLinks.facebook} target="_blank" rel="noopener noreferrer" className="bg-gray-700 hover:bg-purple-600 p-3 rounded-full transition-colors">
                 <FaFacebookF size={20} />
               </a>
-              {/* Corrected: Instagram color now applies only on hover */}
               <a href={socialLinks.instagram} target="_blank" rel="noopener noreferrer" className="bg-gray-700 hover:bg-[#E1306C] p-3 rounded-full transition-colors">
                 <FaInstagram size={20} />
               </a>
-               {/* Replaced LinkedIn with Telegram */}
               <a href={socialLinks.telegram} target="_blank" rel="noopener noreferrer" className="bg-gray-700 hover:bg-blue-500 p-3 rounded-full transition-colors">
                 <FaTelegramPlane size={20} />
               </a>
