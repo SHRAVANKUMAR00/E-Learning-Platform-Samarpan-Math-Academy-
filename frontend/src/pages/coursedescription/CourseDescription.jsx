@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import "./coursedescription.css";
+// import "./coursedescription.css"; // REMOVE THIS LINE
 import { useNavigate, useParams } from "react-router-dom";
 import { CourseData } from "../../context/CourseContext";
 import { server } from "../../main";
@@ -20,69 +20,62 @@ const CourseDescription = ({ user }) => {
 
   useEffect(() => {
     fetchCourse(params.id);
-  }, []);
+  }, [params.id]);
 
   const checkoutHandler = async () => {
     const token = localStorage.getItem("token");
     setLoading(true);
 
-    const {
-      data: { order },
-    } = await axios.post(
-      `${server}/api/course/checkout/${params.id}`,
-      {},
-      {
-        headers: {
-          token,
-        },
-      }
-    );
-
-    const options = {
-      key: "rzp_test_hu4uSc3Jfsnnnj", // Enter the Key ID generated from the Dashboard
-      amount: order.id, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
-      currency: "INR",
-      name: "Samarpan", //your business name
-      description: "Learn with us",
-      order_id: order.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
-
-      handler: async function (response) {
-        const { razorpay_order_id, razorpay_payment_id, razorpay_signature } =
-          response;
-
-        try {
-          const { data } = await axios.post(
-            `${server}/api/verification/${params.id}`,
-            {
-              razorpay_order_id,
-              razorpay_payment_id,
-              razorpay_signature,
-            },
-            {
-              headers: {
-                token,
-              },
-            }
-          );
-
-          await fetchUser();
-          await fetchCourses();
-          await fetchMyCourse();
-          toast.success(data.message);
-          setLoading(false);
-          navigate(`/payment-success/${razorpay_payment_id}`);
-        } catch (error) {
-          toast.error(error.response.data.message);
-          setLoading(false);
+    try {
+      const { data: { order } } = await axios.post(
+        `${server}/api/course/checkout/${params.id}`,
+        {},
+        {
+          headers: { token },
         }
-      },
-      theme: {
-        color: "#8a4baf",
-      },
-    };
-    const razorpay = new window.Razorpay(options);
+      );
 
-    razorpay.open();
+      const options = {
+        key: "rzp_test_hu4uSc3Jfsnnnj",
+        amount: order.id,
+        currency: "INR",
+        name: "Samarpan",
+        description: "Learn with us",
+        order_id: order.id,
+        handler: async function (response) {
+          const { razorpay_order_id, razorpay_payment_id, razorpay_signature } =
+            response;
+
+          try {
+            const { data } = await axios.post(
+              `${server}/api/verification/${params.id}`,
+              { razorpay_order_id, razorpay_payment_id, razorpay_signature },
+              {
+                headers: { token },
+              }
+            );
+
+            await fetchUser();
+            await fetchCourses();
+            await fetchMyCourse();
+            toast.success(data.message);
+            setLoading(false);
+            navigate(`/payment-success/${razorpay_payment_id}`);
+          } catch (error) {
+            toast.error(error.response.data.message);
+            setLoading(false);
+          }
+        },
+        theme: {
+          color: "#8a4baf",
+        },
+      };
+      const razorpay = new window.Razorpay(options);
+      razorpay.open();
+    } catch (error) {
+      toast.error(error.response?.data?.message || "An unexpected error occurred.");
+      setLoading(false);
+    }
   };
 
   return (
@@ -92,36 +85,54 @@ const CourseDescription = ({ user }) => {
       ) : (
         <>
           {course && (
-            <div className="course-description">
-              <div className="course-header">
-                <img
-                  src={`${server}/${course.image}`}
-                  alt=""
-                  className="course-image"
-                />
-                <div className="course-info">
-                  <h2>{course.title}</h2>
-                  <p>Instructor: {course.createdBy}</p>
-                  <p>Duration: {course.duration} weeks</p>
+            <div className="min-h-screen bg-gray-100 py-16">
+              <div className="container mx-auto px-4">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+                  {/* Course Details Section */}
+                  <div className="bg-white p-8 rounded-xl shadow-lg">
+                    <img
+                      src={`${server}/${course.image}`}
+                      alt={course.title}
+                      className="w-full h-80 object-cover rounded-xl mb-6 shadow-md"
+                    />
+                    <div className="space-y-4">
+                      <h1 className="text-4xl font-extrabold text-gray-900 leading-tight">{course.title}</h1>
+                      <p className="text-gray-600 text-lg">
+                        <span className="font-semibold text-gray-800">Instructor:</span> {course.createdBy}
+                      </p>
+                      <p className="text-gray-600 text-lg">
+                        <span className="font-semibold text-gray-800">Duration:</span> {course.duration} weeks
+                      </p>
+                      <p className="text-2xl font-bold text-purple-600 pt-4">
+                        Price: ₹{course.price}
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Description and Action Section */}
+                  <div className="bg-white p-8 rounded-xl shadow-lg flex flex-col justify-between">
+                    <div>
+                      <h3 className="text-3xl font-bold text-gray-900 mb-4">Course Description</h3>
+                      <p className="text-gray-700 leading-relaxed">{course.description}</p>
+                    </div>
+                    
+                    <div className="mt-8 pt-4 border-t border-gray-200">
+                      {user && user.subscription.includes(course._id) ? (
+                        <button
+                          onClick={() => navigate(`/course/study/${course._id}`)}
+                          className="w-full bg-green-600 text-white py-3 rounded-lg font-semibold transition-colors duration-300 hover:bg-green-700 shadow-md"
+                        >
+                          Continue to Study
+                        </button>
+                      ) : (
+                        <button onClick={checkoutHandler} className="w-full bg-purple-600 text-white py-3 rounded-lg font-semibold transition-colors duration-300 hover:bg-purple-700 shadow-md">
+                          Buy Now
+                        </button>
+                      )}
+                    </div>
+                  </div>
                 </div>
               </div>
-
-              <p>{course.description}</p>
-
-              <p>Let's get started with course At ₹{course.price}</p>
-
-              {user && user.subscription.includes(course._id) ? (
-                <button
-                  onClick={() => navigate(`/course/study/${course._id}`)}
-                  className="common-btn"
-                >
-                  Study
-                </button>
-              ) : (
-                <button onClick={checkoutHandler} className="common-btn">
-                  Buy Now
-                </button>
-              )}
             </div>
           )}
         </>

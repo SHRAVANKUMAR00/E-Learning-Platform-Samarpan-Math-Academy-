@@ -2,40 +2,95 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 80vh;
-  background-color: white;
+  /* Use a more subtle background color or a gradient */
+  background: #f7f9fc; 
+  min-height: 100vh; /* Use min-height to ensure it fills the viewport */
+  padding: 20px;
+}
 
-  .auth-form {
-    background-color: #fff;
-    padding: 30px;
-    border-radius: 10px;
-    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
-    text-align: center;
-    width: 300px;
+.auth-form {
+  background-color: #ffffff;
+  padding: 40px; /* Increase padding for more breathing room */
+  border-radius: 12px; /* Smoother, more modern border-radius */
+  /* Use a more subtle, layered box shadow for depth */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05), 0 10px 15px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  width: 100%;
+  max-width: 400px; /* Set a max-width for better control on large screens */
+}
 
-    h2 {
-      font-size: 24px;
-      color: #8a4baf;
-      margin-bottom: 15px;
+.auth-form h2 {
+  font-size: 28px; /* Larger, more impactful heading */
+  color: #333333; /* Use a darker, more professional color */
+  font-family: 'Segoe UI', 'Roboto', sans-serif;
+  margin-bottom: 25px; /* More space below the heading */
+}
+
+.auth-form form {
+  text-align: left;
+
+  label {
+    display: block;
+    margin-bottom: 8px; /* Increase space for labels */
+    font-size: 15px;
+    color: #555555;
+    font-weight: 600; /* Make labels bolder */
+  }
+
+  input {
+    width: 100%; /* Use 100% width for consistency */
+    padding: 12px 15px; /* Add horizontal padding for better aesthetics */
+    margin-bottom: 20px; /* Increase space between inputs */
+    border: 1px solid #e0e0e0; /* Lighter border color */
+    border-radius: 8px; /* Smoother corners for inputs */
+    transition: border-color 0.3s ease; /* Add a smooth transition */
+    font-size: 16px;
+
+    &:focus {
+      outline: none;
+      border-color: #007bff; /* Highlight on focus */
+      box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25); /* Focus glow */
     }
+  }
+}
 
-    form {
-      text-align: left;
+/* Common button style, currently missing from your auth.css */
+.common-btn {
+  width: 100%;
+  padding: 12px;
+  background-color: #007bff; /* Use a modern, brand-neutral blue */
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
 
-      label {
-        display: block;
-        margin-bottom: 5px;
-        font-size: 14px;
-        color: #333;
-      }
+  &:hover {
+    background-color: #0056b3;
+    transform: translateY(-2px); /* Add a slight lift on hover */
+  }
 
-      input {
-        width: 92%;
-        padding: 10px;
-        margin-bottom: 15px;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-      }
-    }
+  &:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+    transform: none;
+  }
+}
+
+.auth-form p {
+  margin-top: 20px;
+  font-size: 14px;
+  color: #666666;
+}
+
+.auth-form p a {
+  color: #007bff;
+  text-decoration: none;
+  font-weight: bold;
+
+  &:hover {
+    text-decoration: underline;
   }
 }

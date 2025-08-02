@@ -1,12 +1,14 @@
 import React from "react";
 import Sidebar from "./Sidebar";
-import "./common.css";
+// import "./common.css"; // REMOVE THIS LINE
 
 const Layout = ({ children }) => {
   return (
-    <div className="dashboard-admin">
+    <div className="flex bg-gray-100 min-h-screen">
       <Sidebar />
-      <div className="content">{children}</div>
+      <div className="flex-1 p-4 lg:p-8">
+        {children}
+      </div>
     </div>
   );
 };

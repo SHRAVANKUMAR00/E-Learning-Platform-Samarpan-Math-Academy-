@@ -20,9 +20,10 @@ import Lecture from "./pages/lecture/Lecture";
 import AdminDashbord from "./admin/Dashboard/AdminDashboard";
 import AdminCourses from "./admin/Courses/AdminCourses";
 import AdminUsers from "./admin/Users/AdminUsers";
+import AddCourse from "./admin/Courses/AddCourse";
 import ForgotPassword from "./pages/auth/ForgotPassword";
 import ResetPassword from "./pages/auth/ResetPassword";
-import AITools from "./pages/aitools/AITools"; // ADDED: New consolidated AI page
+import AITools from "./pages/aitools/AITools";
 
 const App = () => {
   const { isAuth, user, loading } = UserData();
@@ -34,11 +35,10 @@ const App = () => {
         <BrowserRouter>
           <Header isAuth={isAuth} />
           <Routes>
-            <Route path="/" element={<Home />} />
+            <Route path="/" element={<Home isAuth={isAuth} />} />
             <Route path="/about" element={<About />} />
             <Route path="/courses" element={<Courses />} />
             
-            {/* ADDED: New route for the consolidated AI Tools page */}
             <Route
               path="/ai-tools"
               element={isAuth ? <AITools /> : <Login />}
@@ -93,6 +93,12 @@ const App = () => {
               path="/admin/course"
               element={isAuth ? <AdminCourses user={user} /> : <Login />}
             />
+            
+            <Route
+              path="/admin/course/add"
+              element={isAuth ? <AddCourse user={user} /> : <Login />}
+            />
+
             <Route
               path="/admin/users"
               element={isAuth ? <AdminUsers user={user} /> : <Login />}
