@@ -5,6 +5,10 @@ import jwt from "jsonwebtoken";
 import sendMail, { sendForgotMail } from "../middlewares/sendMail.js";
 import TryCatch from "../middlewares/TryCatch.js";
 import fetch from "node-fetch";
+import { OAuth2Client } from 'google-auth-library'; // NEW: Import OAuth2Client
+
+// Initialize Google OAuth client
+const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 
 // All other functions (register, login, etc.) remain the same...
 export const register = TryCatch(async (req, res) => {
@@ -35,7 +39,7 @@ export const loginUser = TryCatch(async (req, res) => {
   if (!user) return res.status(400).json({ message: "No User with this email" });
   const mathPassword = await bcrypt.compare(password, user.password);
   if (!mathPassword) return res.status(400).json({ message: "wrong Password" });
-  const token = jwt.sign({ _id: user._id }, process.env.Jwt_Sec, { expiresIn: "15d" });
+  const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET, { expiresIn: "15d" }); // Use JWT_SECRET
   res.json({ message: `Welcome back ${user.name}`, token, user });
 });
 
@@ -145,5 +149,53 @@ export const getPerformanceAnalysis = TryCatch(async (req, res) => {
     }
   } catch (error) {
     res.status(500).json({ success: false, message: "Internal server error during AI analysis." });
+  }
+});
+
+// NEW: Google Login Controller Function
+export const googleLogin = TryCatch(async (req, res) => {
+  const { token } = req.body; // This is the Google ID token from the frontend
+
+  if (!token) {
+    return res.status(400).json({ success: false, message: "Google token is required." });
+  }
+
+  try {
+    // Verify the Google ID token
+    const ticket = await client.verifyIdToken({
+      idToken: token,
+      audience: process.env.GOOGLE_CLIENT_ID, // Your Google Client ID
+    });
+
+    const payload = ticket.getPayload(); // Get user data from the token
+    const { email, name, picture } = payload;
+
+    let user = await User.findOne({ email });
+
+    if (user) {
+      // User exists, log them in
+      const authToken = jwt.sign({ _id: user._id }, process.env.JWT_SECRET, { expiresIn: '7d' });
+      return res.status(200).json({ success: true, message: `Welcome back, ${user.name}!`, token: authToken });
+    } else {
+      // User does not exist, register them
+      // You might want to generate a dummy password or prompt them to set one later
+      const dummyPassword = await bcrypt.hash(email + Date.now(), 10); // Hash a unique dummy password
+
+      user = await User.create({
+        name: name,
+        email: email,
+        password: dummyPassword, // Store a dummy hashed password
+        avatar: picture, // Store Google profile picture
+        role: "user", // Default role
+        verified: true, // Google accounts are considered verified
+      });
+
+      const authToken = jwt.sign({ _id: user._id }, process.env.JWT_SECRET, { expiresIn: '7d' });
+      return res.status(201).json({ success: true, message: `Welcome, ${user.name}! Account created.`, token: authToken });
+    }
+
+  } catch (error) {
+    console.error("Google login backend error:", error);
+    res.status(500).json({ success: false, message: "Internal server error during Google login.", error: error.message });
   }
 });

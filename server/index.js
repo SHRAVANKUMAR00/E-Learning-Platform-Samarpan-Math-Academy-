@@ -2,7 +2,7 @@ import express from "express";
 import dotenv from "dotenv";
 import { connectDb } from "./database/db.js";
 import Razorpay from "razorpay";
-import cors from "cors";
+import cors from "cors"; // Import cors
 import fetch from "node-fetch"; // For making API calls to Gemini
 import mongoose from "mongoose"; // ADDED: For QuizResult model interaction
 import { QuizResult } from "./models/QuizResult.js"; // ADDED: Import QuizResult model
@@ -19,7 +19,26 @@ const app = express();
 
 // using middlewares
 app.use(express.json());
-app.use(cors());
+
+// NEW: Explicit CORS configuration
+const allowedOrigins = [
+  process.env.frontendurl, // Your frontend URL from .env (e.g., http://localhost:5173)
+  // Add any other specific frontend origins if you have them (e.g., deployed URLs)
+];
+
+app.use(cors({
+  origin: function (origin, callback) {
+    // Allow requests with no origin (like mobile apps or curl requests)
+    // and requests from allowed origins
+    if (!origin || allowedOrigins.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  credentials: true, // Important for sending cookies/authorization headers
+}));
+
 
 const port = process.env.PORT;
 

@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react"; // Corrected syntax: 'from' instead of '=>'
 import axios from "axios";
 import { server } from "../main";
 import toast, { Toaster } from "react-hot-toast";
@@ -6,7 +6,7 @@ import toast, { Toaster } from "react-hot-toast";
 const UserContext = createContext();
 
 export const UserContextProvider = ({ children }) => {
-  const [user, setUser] = useState([]);
+  const [user, setUser] = useState(null); // Changed initial state to null for clarity
   const [isAuth, setIsAuth] = useState(false);
   const [btnLoading, setBtnLoading] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -29,7 +29,9 @@ export const UserContextProvider = ({ children }) => {
     } catch (error) {
       setBtnLoading(false);
       setIsAuth(false);
-      toast.error(error.response.data.message);
+      // Improved error logging for login
+      console.error("Login Error:", error.response?.data?.message || error.message);
+      toast.error(error.response?.data?.message || "An error occurred during login.");
     }
   }
 
@@ -48,7 +50,9 @@ export const UserContextProvider = ({ children }) => {
       navigate("/verify");
     } catch (error) {
       setBtnLoading(false);
-      toast.error(error.response.data.message);
+      // Improved error logging for register
+      console.error("Register Error:", error.response?.data?.message || error.message);
+      toast.error(error.response?.data?.message || "An error occurred during registration.");
     }
   }
 
@@ -66,31 +70,50 @@ export const UserContextProvider = ({ children }) => {
       localStorage.clear();
       setBtnLoading(false);
     } catch (error) {
-      toast.error(error.response.data.message);
+      // Improved error logging for verify OTP
+      console.error("Verify OTP Error:", error.response?.data?.message || error.message);
+      toast.error(error.response?.data?.message || "An error occurred during OTP verification.");
       setBtnLoading(false);
     }
   }
 
   async function fetchUser() {
+    setLoading(true); // Indicate loading for user data
     try {
+      const token = localStorage.getItem("token");
+      if (!token) {
+        // console.log("No token found, user not authenticated."); // Debug log
+        setIsAuth(false);
+        setUser(null);
+        setLoading(false);
+        return;
+      }
+
+      // console.log("Token found, attempting to fetch user profile..."); // Debug log
       const { data } = await axios.get(`${server}/api/user/me`, {
         headers: {
-          token: localStorage.getItem("token"),
+          token,
         },
       });
 
-      setIsAuth(true);
+      // console.log("User profile fetched successfully:", data.user); // Debug log
       setUser(data.user);
-      setLoading(false);
+      setIsAuth(true);
     } catch (error) {
-      console.log(error);
-      setLoading(false);
+      // CRITICAL: Log the detailed error response for debugging 401
+      console.error("Error fetching user profile (fetchUser):", error.response?.status, error.response?.data || error.message);
+      localStorage.removeItem("token"); // Clear invalid token
+      setIsAuth(false);
+      setUser(null);
+    } finally {
+      setLoading(false); // Always set loading to false
     }
   }
 
   useEffect(() => {
     fetchUser();
-  }, []);
+  }, []); // Run once on mount to check initial auth status
+
   return (
     <UserContext.Provider
       value={{
@@ -103,7 +126,7 @@ export const UserContextProvider = ({ children }) => {
         loading,
         registerUser,
         verifyOtp,
-        fetchUser,
+        fetchUser, // Expose fetchUser
       }}
     >
       {children}

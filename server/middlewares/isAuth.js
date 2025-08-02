@@ -14,7 +14,8 @@ export const isAuth = async (req, res, next) => {
     }
 
     // Verify the token
-    const decodedData = jwt.verify(token, process.env.Jwt_Sec);
+    // CORRECTED: Changed process.env.Jwt_Sec to process.env.JWT_SECRET
+    const decodedData = jwt.verify(token, process.env.JWT_SECRET); 
 
     // Find the user from the database using the ID from the token
     req.user = await User.findById(decodedData._id);
@@ -30,6 +31,7 @@ export const isAuth = async (req, res, next) => {
     next();
   } catch (error) {
     // This block will catch errors from jwt.verify (e.g., expired token)
+    console.error("Authentication Error (isAuth):", error.message); // Added console.error for better debugging
     res.status(401).json({
       message: "Invalid or expired token. Please log in again.",
     });

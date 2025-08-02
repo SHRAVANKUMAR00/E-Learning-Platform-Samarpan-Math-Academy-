@@ -1,12 +1,13 @@
 import express from "express";
 import {
   forgotPassword,
-  getPerformanceAnalysis, // ADDED
+  getPerformanceAnalysis,
   loginUser,
   myProfile,
   register,
   resetPassword,
   verifyUser,
+  googleLogin, // NEW: Import googleLogin controller
 } from "../controllers/user.js";
 import { isAuth } from "../middlewares/isAuth.js";
 import { addProgress, getYourProgress } from "../controllers/course.js";
@@ -27,7 +28,10 @@ router.post("/user/reset", resetPassword);
 router.post("/user/progress", isAuth, addProgress);
 router.get("/user/progress", isAuth, getYourProgress);
 
-// --- NEW AI PERFORMANCE ANALYSIS ROUTE ---
-router.get("/user/performance-analysis", isAuth, getPerformanceAnalysis); // ADDED
+// AI Performance Analysis Route
+router.get("/user/performance-analysis", isAuth, getPerformanceAnalysis);
+
+// NEW: Google Login Route
+router.post("/user/google-login", googleLogin); // Add this line
 
 export default router;
