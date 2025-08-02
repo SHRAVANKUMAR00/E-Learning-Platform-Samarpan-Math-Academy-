@@ -6,7 +6,7 @@ import { CourseContextProvider } from "./context/CourseContext.jsx";
 import 'katex/dist/katex.min.css';
 import { GoogleOAuthProvider } from '@react-oauth/google'; // NEW: Import GoogleOAuthProvider
 
-export const server = "http://localhost:5000";
+export const server = "https://samarpan-guzg.onrender.com";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
