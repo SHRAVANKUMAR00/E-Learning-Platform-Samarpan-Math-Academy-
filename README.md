@@ -65,8 +65,8 @@
 
 ## ⚡ Live Demo
 
-- **Frontend:** [samarpan-math-academy.vercel.app](https://samarpan-math-academy.vercel.app)
-- **YouTube Demo:https://www.youtube.com/watch?v=-I-ZQTPgdJk
+- **Frontend:** [samarpan-math-academy](https://samarpan-math-academy.vercel.app)
+- **YouTube Demo:** [youtube.com](https://www.youtube.com/watch?v=-I-ZQTPgdJk)
 
 ---
 
@@ -168,10 +168,7 @@ This project is licensed under the [MIT License](LICENSE).
 
 - 👨‍💻 Developer: [Shravan Kumar](https://github.com/SHRAVANKUMAR00)
 - ✉️ Email: shravankumar00549@gmail.com
-- 💬 [WhatsApp Group](https://chat.whatsapp.com/Luru6pYkIqY0DU2Y2L3mode)
-- ✈️ [Telegram Channel](https://t.me/Samarpanacademy)
-- 📘 [Facebook](https://www.facebook.com/share/1DwhFgiFtW)
-- 📸 [Instagram](https://instagram.com/m.k.yadav2000)
+- 💬 Phone: +91 7827972277
 
 ---
 
@@ -179,4 +176,4 @@ This project is licensed under the [MIT License](LICENSE).
 
 ---
 
-Let me know if you want this file uploaded for you or if you need any more customization!
+
