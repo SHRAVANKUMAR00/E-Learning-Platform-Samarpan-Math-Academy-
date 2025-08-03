@@ -1,9 +1,11 @@
 🎓 Samarpan Math Academy
 
 📚 E-Learning Platform with AI-Powered Math Tools
+
 Samarpan Math Academy is a modern MERN stack e-learning platform crafted to empower students in their mathematics journey. With structured courses, interactive lectures, and advanced AI integration, it delivers a personalized and engaging learning experience. From dynamic quizzes and instant formula generation to insightful performance analytics, Samarpan Math Academy is your all-in-one solution for mastering mathematics.
 
 ✨ Features
+
 🔒 User Authentication & Authorization
 
 📨 Secure registration with Email OTP verification
@@ -252,10 +254,13 @@ Admin Panel: Log in with an admin account to access course and user management.
 📧 Contact
 👨‍💻 Developer: Shravan Kumar 🐙 GitHub: SHRAVANKUMAR00
 
-✉️ Email: shravankumar00549@gmail.com
+✉️ Email: msamarpan44@gmail.com
 
 📞 Phone: +91 62012 12522
 
+💬 WhatsApp Group: https://chat.whatsapp.com/Luru6pYkIqY0DU2Y2L3mode
+
+✈️ Telegram Channel: https://t.me/Samarpanacademy
 
 📘 Facebook: https://www.facebook.com/share/1DwhFgiFtW
 
