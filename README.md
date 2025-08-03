@@ -25,46 +25,51 @@
                 position: sticky;
             }
         }
+        /* Custom styles for animations */
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes slideInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .animate-fade-in { animation: fadeIn 0.8s ease-out forwards; }
+        .animate-slide-in-up { animation: slideInUp 0.8s ease-out forwards; }
     </style>
 </head>
 <body class="bg-gray-50 text-gray-800">
     <div class="min-h-screen flex flex-col lg:flex-row">
         <!-- Sidebar Navigation (Sticky on larger screens) -->
         <nav class="lg:w-64 bg-white shadow-lg p-6 lg:h-screen lg:sticky-nav">
-            <div class="flex items-center justify-center lg:justify-start mb-6">
-                <img src="[https://img.icons8.com/color/96/000000/graduation-cap.png](https://img.icons8.com/color/96/000000/graduation-cap.png)" alt="Samarpan Math Academy Logo" class="w-16 h-16 mr-3" />
+            <div class="flex items-center justify-center lg:justify-start mb-6 border-b border-gray-200 pb-4">
+                <img src="[https://img.icons8.com/color/96/000000/graduation-cap.png](https://img.icons8.com/color/96/000000/graduation-cap.png)" alt="Samarpan Math Academy Logo" class="w-16 h-16 mr-3 rounded-full shadow-md" />
                 <h1 class="text-2xl font-bold text-gray-900 hidden lg:block">Samarpan Math Academy</h1>
             </div>
             <ul class="space-y-3">
-                <li><a href="#overview" class="block py-2 px-4 rounded-lg text-gray-700 hover:bg-gray-100 hover:text-purple-600 transition-colors duration-200 font-medium">🚀 Overview</a></li>
-                <li><a href="#features" class="block py-2 px-4 rounded-lg text-gray-700 hover:bg-gray-100 hover:text-purple-600 transition-colors duration-200 font-medium">✨ Features</a></li>
-                <li><a href="#tech-stack" class="block py-2 px-4 rounded-lg text-gray-700 hover:bg-gray-100 hover:text-purple-600 transition-colors duration-200 font-medium">💻 Tech Stack</a></li>
-                <li><a href="#live-demo" class="block py-2 px-4 rounded-lg text-gray-700 hover:bg-gray-100 hover:text-purple-600 transition-colors duration-200 font-medium">⚡ Live Demo</a></li>
-                <li><a href="#setup" class="block py-2 px-4 rounded-lg text-gray-700 hover:bg-gray-100 hover:text-purple-600 transition-colors duration-200 font-medium">⚙️ Setup & Installation</a></li>
-                <li><a href="#usage" class="block py-2 px-4 rounded-lg text-gray-700 hover:bg-gray-100 hover:text-purple-600 transition-colors duration-200 font-medium">🚀 Usage</a></li>
-                <li><a href="#contributing" class="block py-2 px-4 rounded-lg text-gray-700 hover:bg-gray-100 hover:text-purple-600 transition-colors duration-200 font-medium">🤝 Contributing</a></li>
-                <li><a href="#license" class="block py-2 px-4 rounded-lg text-gray-700 hover:bg-gray-100 hover:text-purple-600 transition-colors duration-200 font-medium">📄 License</a></li>
-                <li><a href="#contact" class="block py-2 px-4 rounded-lg text-gray-700 hover:bg-gray-100 hover:text-purple-600 transition-colors duration-200 font-medium">📧 Contact</a></li>
+                <li><a href="#overview" class="block py-2 px-4 rounded-lg text-gray-700 hover:bg-gray-100 hover:text-purple-600 transition-colors duration-200 font-medium flex items-center">🚀 <span class="ml-2">Overview</span></a></li>
+                <li><a href="#features" class="block py-2 px-4 rounded-lg text-gray-700 hover:bg-gray-100 hover:text-purple-600 transition-colors duration-200 font-medium flex items-center">✨ <span class="ml-2">Features</span></a></li>
+                <li><a href="#tech-stack" class="block py-2 px-4 rounded-lg text-gray-700 hover:bg-gray-100 hover:text-purple-600 transition-colors duration-200 font-medium flex items-center">💻 <span class="ml-2">Tech Stack</span></a></li>
+                <li><a href="#live-demo" class="block py-2 px-4 rounded-lg text-gray-700 hover:bg-gray-100 hover:text-purple-600 transition-colors duration-200 font-medium flex items-center">⚡ <span class="ml-2">Live Demo</span></a></li>
+                <li><a href="#setup" class="block py-2 px-4 rounded-lg text-gray-700 hover:bg-gray-100 hover:text-purple-600 transition-colors duration-200 font-medium flex items-center">⚙️ <span class="ml-2">Setup & Installation</span></a></li>
+                <li><a href="#usage" class="block py-2 px-4 rounded-lg text-gray-700 hover:bg-gray-100 hover:text-purple-600 transition-colors duration-200 font-medium flex items-center">🚀 <span class="ml-2">Usage</span></a></li>
+                <li><a href="#contributing" class="block py-2 px-4 rounded-lg text-gray-700 hover:bg-gray-100 hover:text-purple-600 transition-colors duration-200 font-medium flex items-center">🤝 <span class="ml-2">Contributing</span></a></li>
+                <li><a href="#license" class="block py-2 px-4 rounded-lg text-gray-700 hover:bg-gray-100 hover:text-purple-600 transition-colors duration-200 font-medium flex items-center">📄 <span class="ml-2">License</span></a></li>
+                <li><a href="#contact" class="block py-2 px-4 rounded-lg text-gray-700 hover:bg-gray-100 hover:text-purple-600 transition-colors duration-200 font-medium flex items-center">📧 <span class="ml-2">Contact</span></a></li>
             </ul>
         </nav>
 
         <!-- Main Content Area -->
         <main class="flex-1 p-6 lg:p-10">
-            <header class="mb-10 text-center lg:text-left">
-                <h1 class="text-5xl font-extrabold text-gray-900 mb-2">🎓 Samarpan Math Academy</h1>
-                <p class="text-xl text-gray-600"><b>E-Learning Platform with AI-Powered Math Tools</b></p>
-                <p class="text-lg text-gray-500 italic mt-1">Your all-in-one solution for mastering mathematics!</p>
+            <header class="mb-10 text-center lg:text-left animate-slide-in-up">
+                <h1 class="text-5xl md:text-6xl font-extrabold text-gray-900 mb-2">🎓 <span class="text-purple-700">Samarpan</span> Math Academy</h1>
+                <p class="text-2xl text-gray-700"><b>E-Learning Platform with AI-Powered Math Tools</b></p>
+                <p class="text-xl text-gray-600 italic mt-2">Your all-in-one solution for mastering mathematics!</p>
                 
-                <div class="flex flex-wrap justify-center lg:justify-start gap-3 mt-6">
-                    <a href="[https://samarpan-math-academy.vercel.app](https://samarpan-math-academy.vercel.app)" target="_blank" rel="noopener noreferrer" class="inline-block"><img src="[https://img.shields.io/badge/Live%20Demo-Visit%20Now-blue?style=for-the-badge&logo=vercel](https://img.shields.io/badge/Live%20Demo-Visit%20Now-blue?style=for-the-badge&logo=vercel)" alt="Live Demo" /></a>
-                    <a href="[https://github.com/SHRAVANKUMAR00/E-Learning-Platform-Samarpan-Math-Academy-/issues](https://github.com/SHRAVANKUMAR00/E-Learning-Platform-Samarpan-Math-Academy-/issues)" target="_blank" rel="noopener noreferrer" class="inline-block"><img src="[https://img.shields.io/github/issues/SHRAVANKUMAR00/E-Learning-Platform-Samarpan-Math-Academy-?style=for-the-badge](https://img.shields.io/github/issues/SHRAVANKUMAR00/E-Learning-Platform-Samarpan-Math-Academy-?style=for-the-badge)" alt="GitHub Issues" /></a>
-                    <a href="[https://github.com/SHRAVANKUMAR00/E-Learning-Platform-Samarpan-Math-Academy-/stargazers](https://github.com/SHRAVANKUMAR00/E-Learning-Platform-Samarpan-Math-Academy-/stargazers)" target="_blank" rel="noopener noreferrer" class="inline-block"><img src="[https://img.shields.io/github/stars/SHRAVANKUMAR00/E-Learning-Platform-Samarpan-Math-Academy-?style=for-the-badge](https://img.shields.io/github/stars/SHRAVANKUMAR00/E-Learning-Platform-Samarpan-Math-Academy-?style=for-the-badge)" alt="GitHub Stars" /></a>
-                    <a href="[https://t.me/Samarpanacademy](https://t.me/Samarpanacademy)" target="_blank" rel="noopener noreferrer" class="inline-block"><img src="[https://img.shields.io/badge/Telegram-Join%20Now-blue?style=for-the-badge&logo=telegram](https://img.shields.io/badge/Telegram-Join%20Now-blue?style=for-the-badge&logo=telegram)" alt="Telegram" /></a>
+                <div class="flex flex-wrap justify-center lg:justify-start gap-4 mt-8">
+                    <a href="[https://samarpan-math-academy.vercel.app](https://samarpan-math-academy.vercel.app)" target="_blank" rel="noopener noreferrer" class="inline-block transform transition-transform duration-200 hover:scale-105"><img src="[https://img.shields.io/badge/Live%20Demo-Visit%20Now-blue?style=for-the-badge&logo=vercel](https://img.shields.io/badge/Live%20Demo-Visit%20Now-blue?style=for-the-badge&logo=vercel)" alt="Live Demo" /></a>
+                    <a href="[https://github.com/SHRAVANKUMAR00/E-Learning-Platform-Samarpan-Math-Academy-/issues](https://github.com/SHRAVANKUMAR00/E-Learning-Platform-Samarpan-Math-Academy-/issues)" target="_blank" rel="noopener noreferrer" class="inline-block transform transition-transform duration-200 hover:scale-105"><img src="[https://img.shields.io/github/issues/SHRAVANKUMAR00/E-Learning-Platform-Samarpan-Math-Academy-?style=for-the-badge](https://img.shields.io/github/issues/SHRAVANKUMAR00/E-Learning-Platform-Samarpan-Math-Academy-?style=for-the-badge)" alt="GitHub Issues" /></a>
+                    <a href="[https://github.com/SHRAVANKUMAR00/E-Learning-Platform-Samarpan-Math-Academy-/stargazers](https://github.com/SHRAVANKUMAR00/E-Learning-Platform-Samarpan-Math-Academy-/stargazers)" target="_blank" rel="noopener noreferrer" class="inline-block transform transition-transform duration-200 hover:scale-105"><img src="[https://img.shields.io/github/stars/SHRAVANKUMAR00/E-Learning-Platform-Samarpan-Math-Academy-?style=for-the-badge](https://img.shields.io/github/stars/SHRAVANKUMAR00/E-Learning-Platform-Samarpan-Math-Academy-?style=for-the-badge)" alt="GitHub Stars" /></a>
+                    <a href="[https://t.me/Samarpanacademy](https://t.me/Samarpanacademy)" target="_blank" rel="noopener noreferrer" class="inline-block transform transition-transform duration-200 hover:scale-105"><img src="[https://img.shields.io/badge/Telegram-Join%20Now-blue?style=for-the-badge&logo=telegram](https://img.shields.io/badge/Telegram-Join%20Now-blue?style=for-the-badge&logo=telegram)" alt="Telegram" /></a>
                 </div>
             </header>
 
             <!-- Overview Section -->
-            <section id="overview" class="bg-white p-8 rounded-xl shadow-lg mb-10">
+            <section id="overview" class="bg-white p-8 rounded-xl shadow-xl mb-10 animate-fade-in">
                 <h2 class="text-3xl font-bold text-gray-900 mb-4">🚀 Overview</h2>
                 <p class="text-lg text-gray-700 leading-relaxed">
                     **Samarpan Math Academy** is a modern **MERN stack** e-learning platform designed to **empower students** in their mathematics journey. It combines **structured courses**, **interactive lectures**, and **advanced AI tools** for a **personalized and engaging learning experience**.
@@ -72,10 +77,10 @@
             </section>
 
             <!-- Features Section -->
-            <section id="features" class="bg-white p-8 rounded-xl shadow-lg mb-10">
+            <section id="features" class="bg-white p-8 rounded-xl shadow-xl mb-10 animate-fade-in">
                 <h2 class="text-3xl font-bold text-gray-900 mb-4">✨ Features</h2>
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    <div>
+                    <div class="p-4 rounded-lg bg-gray-50 shadow-md transform transition-transform duration-200 hover:scale-105">
                         <h3 class="text-xl font-semibold text-gray-800 mb-2">🔒 Secure Authentication</h3>
                         <ul class="list-disc list-inside text-gray-700 space-y-1">
                             <li>📨 Email OTP verification</li>
@@ -84,7 +89,7 @@
                             <li>🛡️ Role-based access</li>
                         </ul>
                     </div>
-                    <div>
+                    <div class="p-4 rounded-lg bg-gray-50 shadow-md transform transition-transform duration-200 hover:scale-105">
                         <h3 class="text-xl font-semibold text-gray-800 mb-2">📚 Course Management</h3>
                         <ul class="list-disc list-inside text-gray-700 space-y-1">
                             <li>🔍 Browse public courses</li>
@@ -93,14 +98,14 @@
                             <li>💳 Razorpay integration</li>
                         </ul>
                     </div>
-                    <div>
+                    <div class="p-4 rounded-lg bg-gray-50 shadow-md transform transition-transform duration-200 hover:scale-105">
                         <h3 class="text-xl font-semibold text-gray-800 mb-2">🎥 Lecture & Progress</h3>
                         <ul class="list-disc list-inside text-gray-700 space-y-1">
                             <li>▶️ Interactive video lectures</li>
                             <li>📈 Track completion & progress</li>
                         </ul>
                     </div>
-                    <div>
+                    <div class="p-4 rounded-lg bg-gray-50 shadow-md transform transition-transform duration-200 hover:scale-105">
                         <h3 class="text-xl font-semibold text-gray-800 mb-2">🤖 AI-Powered Tools</h3>
                         <ul class="list-disc list-inside text-gray-700 space-y-1">
                             <li>📝 MCQ Quiz Generator</li>
@@ -109,7 +114,7 @@
                             <li>📊 Performance analysis</li>
                         </ul>
                     </div>
-                    <div>
+                    <div class="p-4 rounded-lg bg-gray-50 shadow-md transform transition-transform duration-200 hover:scale-105">
                         <h3 class="text-xl font-semibold text-gray-800 mb-2">🛠️ Admin Panel</h3>
                         <ul class="list-disc list-inside text-gray-700 space-y-1">
                             <li>📊 Dashboard with key stats</li>
@@ -117,7 +122,7 @@
                             <li>👑 Manage user roles</li>
                         </ul>
                     </div>
-                    <div>
+                    <div class="p-4 rounded-lg bg-gray-50 shadow-md transform transition-transform duration-200 hover:scale-105">
                         <h3 class="text-xl font-semibold text-gray-800 mb-2">💻 Modern UI</h3>
                         <ul class="list-disc list-inside text-gray-700 space-y-1">
                             <li>⚛️ React.js & Tailwind CSS</li>
@@ -129,42 +134,42 @@
             </section>
 
             <!-- Tech Stack Section -->
-            <section id="tech-stack" class="bg-white p-8 rounded-xl shadow-lg mb-10">
+            <section id="tech-stack" class="bg-white p-8 rounded-xl shadow-xl mb-10 animate-fade-in">
                 <h2 class="text-3xl font-bold text-gray-900 mb-4">🖥️ Tech Stack</h2>
-                <div class="overflow-x-auto">
+                <div class="overflow-x-auto rounded-lg border border-gray-200">
                     <table class="w-full text-left table-auto">
                         <thead class="bg-gray-100 text-gray-700 uppercase text-sm">
                             <tr>
-                                <th class="px-4 py-2">Frontend</th>
-                                <th class="px-4 py-2">Backend</th>
-                                <th class="px-4 py-2">Database</th>
-                                <th class="px-4 py-2">AI Integration</th>
+                                <th class="px-4 py-3">Frontend</th>
+                                <th class="px-4 py-3">Backend</th>
+                                <th class="px-4 py-3">Database</th>
+                                <th class="px-4 py-3">AI Integration</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td class="border px-4 py-2">React.js, Tailwind CSS</td>
-                                <td class="border px-4 py-2">Node.js, Express.js</td>
-                                <td class="border px-4 py-2">MongoDB Atlas</td>
-                                <td class="border px-4 py-2">Google Gemini API</td>
+                            <tr class="border-b border-gray-100">
+                                <td class="px-4 py-2">React.js, Tailwind CSS</td>
+                                <td class="px-4 py-2">Node.js, Express.js</td>
+                                <td class="px-4 py-2">MongoDB Atlas</td>
+                                <td class="px-4 py-2">Google Gemini API</td>
+                            </tr>
+                            <tr class="border-b border-gray-100">
+                                <td class="px-4 py-2">React Router DOM</td>
+                                <td class="px-4 py-2">JWT, bcrypt, multer</td>
+                                <td class="px-4 py-2">Mongoose</td>
+                                <td class="px-4 py-2">KaTeX</td>
+                            </tr>
+                            <tr class="border-b border-gray-100">
+                                <td class="px-4 py-2">Axios, Recharts, KaTeX</td>
+                                <td class="px-4 py-2">Nodemailer, Razorpay</td>
+                                <td class="px-4 py-2"></td>
+                                <td class="px-4 py-2"></td>
                             </tr>
                             <tr>
-                                <td class="border px-4 py-2">React Router DOM</td>
-                                <td class="border px-4 py-2">JWT, bcrypt, multer</td>
-                                <td class="border px-4 py-2">Mongoose</td>
-                                <td class="border px-4 py-2">KaTeX</td>
-                            </tr>
-                            <tr>
-                                <td class="border px-4 py-2">Axios, Recharts, KaTeX</td>
-                                <td class="border px-4 py-2">Nodemailer, Razorpay</td>
-                                <td class="border px-4 py-2"></td>
-                                <td class="border px-4 py-2"></td>
-                            </tr>
-                            <tr>
-                                <td class="border px-4 py-2">Vite, React Hot Toast</td>
-                                <td class="border px-4 py-2">Google Auth Library</td>
-                                <td class="border px-4 py-2"></td>
-                                <td class="border px-4 py-2"></td>
+                                <td class="px-4 py-2">Vite, React Hot Toast</td>
+                                <td class="px-4 py-2">Google Auth Library</td>
+                                <td class="px-4 py-2"></td>
+                                <td class="px-4 py-2"></td>
                             </tr>
                         </tbody>
                     </table>
@@ -172,11 +177,11 @@
             </section>
 
             <!-- Live Demo Section -->
-            <section id="live-demo" class="bg-white p-8 rounded-xl shadow-lg mb-10 text-center">
+            <section id="live-demo" class="bg-white p-8 rounded-xl shadow-xl mb-10 text-center animate-fade-in">
                 <h2 class="text-3xl font-bold text-gray-900 mb-4">⚡ Live Demo</h2>
-                <p class="text-lg text-gray-700 mb-4">Experience the **Samarpan Math Academy** live!</p>
+                <p class="text-lg text-gray-700 mb-6">Experience the **Samarpan Math Academy** live!</p>
                 <div class="flex flex-col sm:flex-row justify-center gap-4">
-                    <a href="[https://samarpan-math-academy.vercel.app](https://samarpan-math-academy.vercel.app)" target="_blank" rel="noopener noreferrer" class="inline-block bg-purple-600 text-white py-3 px-8 rounded-full font-bold shadow-md hover:bg-purple-700 transition-colors duration-200">
+                    <a href="[https://samarpan-math-academy.vercel.app](https://samarpan-math-academy.vercel.app)" target="_blank" rel="noopener noreferrer" class="inline-block bg-purple-600 text-white py-3 px-8 rounded-full font-bold shadow-md hover:bg-purple-700 transition-colors duration-200 transform hover:scale-105">
                         🌐 Visit Frontend
                     </a>
                     <a href="[https://youtu.be/-I-ZQTPgdJk](https://youtu.be/-I-ZQTPgdJk)" target="_blank" rel="noopener noreferrer" class="inline-block bg-red-600 text-white py-3 px-8 rounded-full font-bold shadow-md hover:bg-red-700 transition-colors duration-200">
@@ -186,7 +191,7 @@
             </section>
 
             <!-- Setup & Installation Section -->
-            <section id="setup" class="bg-white p-8 rounded-xl shadow-lg mb-10">
+            <section id="setup" class="bg-white p-8 rounded-xl shadow-xl mb-10 animate-fade-in">
                 <h2 class="text-3xl font-bold text-gray-900 mb-4">⚙️ Setup & Installation (Local)</h2>
                 <p class="text-lg text-gray-700 leading-relaxed mb-6">Follow these steps to get the project running on your local machine:</p>
 
@@ -253,7 +258,7 @@ JWT_EXPIRE=1h</code></pre>
             </section>
 
             <!-- Usage Section -->
-            <section id="usage" class="bg-white p-8 rounded-xl shadow-lg mb-10">
+            <section id="usage" class="bg-white p-8 rounded-xl shadow-xl mb-10 animate-fade-in">
                 <h2 class="text-3xl font-bold text-gray-900 mb-4">🙋‍♂️ Usage</h2>
                 <h3 class="text-2xl font-semibold text-gray-800 mb-3">User Roles</h3>
                 <ul class="list-disc list-inside text-gray-700 space-y-1 mb-6">
@@ -271,7 +276,7 @@ JWT_EXPIRE=1h</code></pre>
             </section>
 
             <!-- Contributing Section -->
-            <section id="contributing" class="bg-white p-8 rounded-xl shadow-lg mb-10">
+            <section id="contributing" class="bg-white p-8 rounded-xl shadow-xl mb-10 animate-fade-in">
                 <h2 class="text-3xl font-bold text-gray-900 mb-4">🤝 Contributing</h2>
                 <p class="text-lg text-gray-700 leading-relaxed">
                     Contributions are welcome! If you find a bug or have a feature request, <a href="[https://github.com/SHRAVANKUMAR00/E-Learning-Platform-Samarpan-Math-Academy-/issues](https://github.com/SHRAVANKUMAR00/E-Learning-Platform-Samarpan-Math-Academy-/issues)" target="_blank" rel="noopener noreferrer" class="text-purple-600 hover:underline">open an issue</a> or <a href="[https://github.com/SHRAVANKUMAR00/E-Learning-Platform-Samarpan-Math-Academy-/pulls](https://github.com/SHRAVANKUMAR00/E-Learning-Platform-Samarpan-Math-Academy-/pulls)" target="_blank" rel="noopener noreferrer" class="text-purple-600 hover:underline">submit a pull request</a>.
@@ -279,7 +284,7 @@ JWT_EXPIRE=1h</code></pre>
             </section>
 
             <!-- License Section -->
-            <section id="license" class="bg-white p-8 rounded-xl shadow-lg mb-10">
+            <section id="license" class="bg-white p-8 rounded-xl shadow-xl mb-10 animate-fade-in">
                 <h2 class="text-3xl font-bold text-gray-900 mb-4">📄 License</h2>
                 <p class="text-lg text-gray-700 leading-relaxed">
                     This project is licensed under the <a href="LICENSE" target="_blank" rel="noopener noreferrer" class="text-purple-600 hover:underline">MIT License</a>.
@@ -287,7 +292,7 @@ JWT_EXPIRE=1h</code></pre>
             </section>
 
             <!-- Contact Section -->
-            <section id="contact" class="bg-white p-8 rounded-xl shadow-lg mb-10">
+            <section id="contact" class="bg-white p-8 rounded-xl shadow-xl mb-10 animate-fade-in">
                 <h2 class="text-3xl font-bold text-gray-900 mb-4">📬 Contact & Community</h2>
                 <ul class="list-disc list-inside text-gray-700 space-y-1">
                     <li><b>👨‍💻 Developer:</b> Shravan Kumar</li>
@@ -300,7 +305,7 @@ JWT_EXPIRE=1h</code></pre>
                     <li><b>📸 Instagram:</b> <a href="[https://instagram.com/m.k.yadav2000](https://instagram.com/m.k.yadav2000)" target="_blank" rel="noopener noreferrer" class="text-purple-600 hover:underline">@m.k.yadav2000 on Instagram</a></li>
                 </ul>
             </section>
-            <p class="text-center text-xl font-bold text-gray-700 mt-10">Empowering your mathematics journey with technology & AI!</p>
+            <p class="text-center text-xl font-bold text-gray-700 mt-10 animate-slide-in-up">Empowering your mathematics journey with technology & AI!</p>
         </main>
     </div>
 
