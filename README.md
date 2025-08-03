@@ -1,4 +1,5 @@
 🎓 Samarpan Math Academy
+
 📚 E-Learning Platform with AI-Powered Math Tools
 Samarpan Math Academy is a modern MERN stack e-learning platform crafted to empower students in their mathematics journey. With structured courses, interactive lectures, and advanced AI integration, it delivers a personalized and engaging learning experience. From dynamic quizzes and instant formula generation to insightful performance analytics, Samarpan Math Academy is your all-in-one solution for mastering mathematics.
 
