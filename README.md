@@ -8,7 +8,7 @@
 </p>
 
 <p align="center">
-  <a href="https://samarpan-math-academy.vercel.app"><img src="https://img.shields.io/badge/Live%20Demo-Visit%20Now-blue?style=for-the-badge&logo=vercel" /></a>
+  <a href="https://www.youtube.com/watch?v=-I-ZQTPgdJk"><img src="https://img.shields.io/badge/Live%20Demo-Visit%20Now-blue?style=for-the-badge&logo=vercel" /></a>
   <a href="https://github.com/SHRAVANKUMAR00/E-Learning-Platform-Samarpan-Math-Academy-/issues"><img src="https://img.shields.io/github/issues/SHRAVANKUMAR00/E-Learning-Platform-Samarpan-Math-Academy-?style=for-the-badge" /></a>
   <a href="https://github.com/SHRAVANKUMAR00/E-Learning-Platform-Samarpan-Math-Academy-/stargazers"><img src="https://img.shields.io/github/stars/SHRAVANKUMAR00/E-Learning-Platform-Samarpan-Math-Academy-?style=for-the-badge" /></a>
   <a href="https://t.me/Samarpanacademy"><img src="https://img.shields.io/badge/Telegram-Join%20Now-blue?style=for-the-badge&logo=telegram" /></a>
@@ -65,7 +65,7 @@
 ## ⚡ Live Demo
 
 - **Frontend:** [samarpan-math-academy.vercel.app](https://samarpan-math-academy.vercel.app)
-- **YouTube Demo:** *Coming Soon*
+- **YouTube Demo:https://www.youtube.com/watch?v=-I-ZQTPgdJk
 
 ---
 
