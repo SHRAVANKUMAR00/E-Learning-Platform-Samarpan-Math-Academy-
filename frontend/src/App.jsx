@@ -1,6 +1,7 @@
 import React from "react";
 import "./App.css";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+// Import BrowserRouter and add 'unstable_useBlocker' if you use it, otherwise just BrowserRouter
+import { BrowserRouter, Routes, Route } from "react-router-dom"; 
 import Home from "./pages/home/Home";
 import Header from "./components/header/Header";
 import Login from "./pages/auth/Login";
@@ -24,7 +25,7 @@ import AddCourse from "./admin/Courses/AddCourse";
 import ForgotPassword from "./pages/auth/ForgotPassword";
 import ResetPassword from "./pages/auth/ResetPassword";
 import AITools from "./pages/aitools/AITools";
-import ScrollToTop from "./components/utils/ScrollToTop"; // NEW: Import ScrollToTop
+import ScrollToTop from "./components/utils/ScrollToTop"; // Import ScrollToTop
 
 const App = () => {
   const { isAuth, user, loading } = UserData();
@@ -33,8 +34,9 @@ const App = () => {
       {loading ? (
         <Loading />
       ) : (
-        <BrowserRouter>
-          <ScrollToTop /> {/* NEW: Add ScrollToTop component here */}
+        // Added future flags to BrowserRouter
+        <BrowserRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
+          <ScrollToTop />
           <Header isAuth={isAuth} />
           <Routes>
             <Route path="/" element={<Home isAuth={isAuth} user={user} />} /> 
