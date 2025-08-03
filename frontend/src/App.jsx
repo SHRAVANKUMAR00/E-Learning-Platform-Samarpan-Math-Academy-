@@ -24,6 +24,7 @@ import AddCourse from "./admin/Courses/AddCourse";
 import ForgotPassword from "./pages/auth/ForgotPassword";
 import ResetPassword from "./pages/auth/ResetPassword";
 import AITools from "./pages/aitools/AITools";
+import ScrollToTop from "./components/utils/ScrollToTop"; // NEW: Import ScrollToTop
 
 const App = () => {
   const { isAuth, user, loading } = UserData();
@@ -33,9 +34,10 @@ const App = () => {
         <Loading />
       ) : (
         <BrowserRouter>
+          <ScrollToTop /> {/* NEW: Add ScrollToTop component here */}
           <Header isAuth={isAuth} />
           <Routes>
-            <Route path="/" element={<Home isAuth={isAuth} />} />
+            <Route path="/" element={<Home isAuth={isAuth} user={user} />} /> 
             <Route path="/about" element={<About />} />
             <Route path="/courses" element={<Courses />} />
             
