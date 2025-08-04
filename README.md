@@ -66,7 +66,7 @@
 ## ⚡ Live Demo
 
 - **Frontend:** [samarpan-math-academy](https://samarpan-math-academy.vercel.app)
-- **YouTube Demo:** [youtube.com](https://www.youtube.com/watch?v=-I-ZQTPgdJk)
+- **YouTube Demo:** [youtube.com](https://youtu.be/rBkzKQEM3JQ)
 
 ---
 
