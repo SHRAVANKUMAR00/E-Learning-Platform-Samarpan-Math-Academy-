@@ -45,7 +45,7 @@
   - AI-driven performance analysis
 - 🛠️ **Admin Panel**
   - Dashboard with key statistics
-  - Manage courses, lectures, user roles ( Admin)
+  - Manage courses, lectures,Moniter users 
 - 💻 **Modern & Responsive UI**
   - Built with React.js & Tailwind CSS
   - Animated, interactive, fully responsive design
