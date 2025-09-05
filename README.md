@@ -45,7 +45,7 @@
   - AI-driven performance analysis
 - 🛠️ **Admin Panel**
   - Dashboard with key statistics
-  - Manage courses, lectures, user roles (Super Admin)
+  - Manage courses, lectures, user roles ( Admin)
 - 💻 **Modern & Responsive UI**
   - Built with React.js & Tailwind CSS
   - Animated, interactive, fully responsive design
@@ -139,7 +139,6 @@ VITE_GOOGLE_CLIENT_ID="YOUR_GOOGLE_OAUTH_CLIENT_ID"
 
 - **Student:** Register, log in, browse/enroll, watch lectures, use AI tools.
 - **Admin:** Manage courses/lectures, view stats.
-- **Super Admin:** All admin privileges + manage user roles.
 
 ---
 
