@@ -9,6 +9,7 @@
 
 <p align="center">
   <a href="https://samarpan-math-academy.vercel.app"><img src="https://img.shields.io/badge/Live%20Demo-Visit%20Now-blue?style=for-the-badge&logo=vercel" /></a>
+  <a href="https://youtu.be/rBkzKQEM3JQ"><img src="https://img.shields.io/badge/YouTube%20Demo-Watch%20Now-red?style=for-the-badge&logo=youtube" /></a>
   <a href="https://github.com/SHRAVANKUMAR00/E-Learning-Platform-Samarpan-Math-Academy-/issues"><img src="https://img.shields.io/github/issues/SHRAVANKUMAR00/E-Learning-Platform-Samarpan-Math-Academy-?style=for-the-badge" /></a>
   <a href="https://github.com/SHRAVANKUMAR00/E-Learning-Platform-Samarpan-Math-Academy-/stargazers"><img src="https://img.shields.io/github/stars/SHRAVANKUMAR00/E-Learning-Platform-Samarpan-Math-Academy-?style=for-the-badge" /></a>
   <a href="https://t.me/Samarpanacademy"><img src="https://img.shields.io/badge/Telegram-Join%20Now-blue?style=for-the-badge&logo=telegram" /></a>
@@ -44,7 +45,7 @@
   - AI-driven performance analysis
 - 🛠️ **Admin Panel**
   - Dashboard with key statistics
-  - Manage courses, lectures, user roles (Super Admin)
+  - Manage courses, lectures,Moniter users 
 - 💻 **Modern & Responsive UI**
   - Built with React.js & Tailwind CSS
   - Animated, interactive, fully responsive design
@@ -64,8 +65,8 @@
 
 ## ⚡ Live Demo
 
-- **Frontend:** [samarpan-math-academy.vercel.app](https://samarpan-math-academy.vercel.app)
-- **YouTube Demo:** *Coming Soon*
+- **Frontend:** [samarpan-math-academy](https://samarpan-math-academy.vercel.app)
+- **YouTube Demo:** [youtube.com](https://youtu.be/rBkzKQEM3JQ)
 
 ---
 
@@ -138,7 +139,6 @@ VITE_GOOGLE_CLIENT_ID="YOUR_GOOGLE_OAUTH_CLIENT_ID"
 
 - **Student:** Register, log in, browse/enroll, watch lectures, use AI tools.
 - **Admin:** Manage courses/lectures, view stats.
-- **Super Admin:** All admin privileges + manage user roles.
 
 ---
 
@@ -167,10 +167,7 @@ This project is licensed under the [MIT License](LICENSE).
 
 - 👨‍💻 Developer: [Shravan Kumar](https://github.com/SHRAVANKUMAR00)
 - ✉️ Email: shravankumar00549@gmail.com
-- 💬 [WhatsApp Group](https://chat.whatsapp.com/Luru6pYkIqY0DU2Y2L3mode)
-- ✈️ [Telegram Channel](https://t.me/Samarpanacademy)
-- 📘 [Facebook](https://www.facebook.com/share/1DwhFgiFtW)
-- 📸 [Instagram](https://instagram.com/m.k.yadav2000)
+- 💬 Phone: +91 7827972277
 
 ---
 
@@ -178,4 +175,4 @@ This project is licensed under the [MIT License](LICENSE).
 
 ---
 
-Let me know if you want this file uploaded for you or if you need any more customization!
+
