@@ -1,20 +1,38 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react'; // Added useEffect
 import axios from 'axios';
 import { Toaster, toast } from 'react-hot-toast';
 import { FaSpinner, FaCheckCircle, FaTimesCircle } from 'react-icons/fa';
-import './AITools.css'; // Import custom CSS file for specific overrides/enhancements
+import './AITools.css';
 
 const QuizGenerator = () => {
   const [topic, setTopic] = useState('');
   const [difficulty, setDifficulty] = useState('9th_10th_Olympiad');
   const [loading, setLoading] = useState(false);
+  
+  // --- FIX: Add Cooldown State ---
+  const [cooldown, setCooldown] = useState(0); 
+
   const [quiz, setQuiz] = useState(null);
   const [error, setError] = useState(null);
   const [studentAnswers, setStudentAnswers] = useState({});
   const [showResults, setShowResults] = useState(false);
 
+  // --- FIX: Add Timer Logic ---
+  useEffect(() => {
+    let timer;
+    if (cooldown > 0) {
+      timer = setInterval(() => {
+        setCooldown((prev) => prev - 1);
+      }, 1000);
+    }
+    return () => clearInterval(timer);
+  }, [cooldown]);
+
   const handleGenerateQuiz = async (e) => {
     e.preventDefault();
+
+    // --- FIX: Prevent click if cooling down ---
+    if (loading || cooldown > 0) return; 
 
     setLoading(true);
     setQuiz(null);
@@ -38,10 +56,16 @@ const QuizGenerator = () => {
       }
     } catch (err) {
       console.error('Error generating quiz:', err);
-      setError(err.response?.data?.message || 'An unexpected error occurred.');
-      toast.error(err.response?.data?.message || 'An unexpected error occurred.');
+      // Handle the 429 specifically if you want
+      if (err.response && err.response.status === 429) {
+         toast.error("Too many requests. Please wait a moment.");
+      } else {
+         setError(err.response?.data?.message || 'An unexpected error occurred.');
+         toast.error(err.response?.data?.message || 'An unexpected error occurred.');
+      }
     } finally {
       setLoading(false);
+      setCooldown(10); // --- FIX: Start 10s cooldown ---
     }
   };
 
@@ -52,28 +76,23 @@ const QuizGenerator = () => {
     }));
   };
 
-  // Modified handleSubmitQuiz to send results to backend
   const handleSubmitQuiz = async () => {
-    // Check if all questions are answered before submitting
     if (Object.keys(studentAnswers).length !== quiz.length) {
       toast.error('Please answer all questions before submitting.');
       return;
     }
 
-    setShowResults(true); // Show results immediately in frontend
+    setShowResults(true);
 
     const score = calculateScore();
     const totalQuestions = quiz.length;
-
-    // Assuming you have a way to get the current user's ID
-    // For now, we'll use a placeholder. In a real app, this comes from auth context/token.
-    const userId = "60c72b1f9b1e8b001c8e8e8e"; // Placeholder User ID - REPLACE WITH ACTUAL USER ID
+    const userId = "60c72b1f9b1e8b001c8e8e8e"; // Placeholder User ID
 
     try {
       const response = await axios.post('http://localhost:5000/api/submit-quiz-result', {
-        userId, // Send user ID
-        topic: quiz[0].topic || topic, // Use topic from quiz if available, else from state
-        difficulty: quiz[0].difficulty || difficulty, // Use difficulty from quiz if available, else from state
+        userId,
+        topic: quiz[0].topic || topic,
+        difficulty: quiz[0].difficulty || difficulty,
         score,
         totalQuestions,
       });
@@ -91,7 +110,6 @@ const QuizGenerator = () => {
     }
   };
 
-  // Calculate score (remains the same)
   const calculateScore = () => {
     if (!quiz) return 0;
     let score = 0;
@@ -140,13 +158,20 @@ const QuizGenerator = () => {
             </select>
           </div>
 
+          {/* --- FIX: Updated Button with Cooldown Logic --- */}
           <button
             type="submit"
-            className="w-full bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 flex items-center justify-center"
-            disabled={loading}
+            className={`w-full py-2 px-4 rounded-md flex items-center justify-center focus:outline-none focus:ring-2 focus:ring-offset-2 ${
+              loading || cooldown > 0
+                ? 'bg-gray-400 cursor-not-allowed'
+                : 'bg-indigo-600 hover:bg-indigo-700 text-white focus:ring-indigo-500'
+            }`}
+            disabled={loading || cooldown > 0}
           >
             {loading ? (
-              <FaSpinner className="animate-spin mr-2" />
+              <><FaSpinner className="animate-spin mr-2" /> Generating...</>
+            ) : cooldown > 0 ? (
+              `Please wait ${cooldown}s`
             ) : (
               'Generate Quiz (10 Questions)'
             )}
